@@ -62,6 +62,8 @@ class ListMachines extends Command
             $this->info('User added successfully');
 
             $username = $newUserName;
+        } elseif ($users->count() === 1) {
+            $username = $users->first()->name;
         } else {
             $menu = $this->menu('Select a user to connect as', $users->pluck('name')->toArray())
                 ->setForegroundColour('white')

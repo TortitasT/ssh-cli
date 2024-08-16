@@ -1,26 +1,29 @@
 #!/bin/bash
 
-# Build
-php ssh-cli app:build --build-version=ssh-cli
 BUILD_EXECUTABLE=builds/ssh-cli
-chmod +x $BUILD_EXECUTABLE
-echo "Build successful"
-
-# Move to bin
+BIN_PATH=~/.local/bin/ssh-cli
 DATA_PATH=~/.local/share/ssh-cli
+DATABASE_PATH="$DATA_PATH/database.sqlite"
+
+php ssh-cli app:build --build-version=ssh-cli
+chmod +x $BUILD_EXECUTABLE
+echo "build successful"
+
 if [ ! -d "$DATA_PATH" ]; then
     mkdir -p $DATA_PATH
 fi
 cp $BUILD_EXECUTABLE "$DATA_PATH/ssh-cli"
-echo "Move to bin successful"
+echo "move to bin successful"
 
-# Create .env
-DATABASE_PATH="$DATA_PATH/database.sqlite"
 echo "DB_DATABASE=$DATABASE_PATH" > "$DATA_PATH/.env"
-echo "Env file created"
+echo ".env file created"
 
-# Link executable
-ln -s "$DATA_PATH/ssh-cli" ~/.local/bin/ssh-cli
-echo "Link successful"
+if [ ! -f "$DATABASE_PATH" ]; then
+    php "$DATA_PATH/ssh-cli" migrate --force
+    echo "migration successful"
+fi
 
-echo "Installation successful"
+ln -s "$DATA_PATH/ssh-cli" $BIN_PATH
+echo "link successful"
+
+echo "ssh-cli installed successfully"
