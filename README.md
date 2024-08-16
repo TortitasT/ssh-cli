@@ -1,6 +1,6 @@
 # ssh-cli
 
-Simple tool to manage ssh connections and configurations.
+Simple tool for managing ssh connections and configurations.
 
 ## Installation
 
