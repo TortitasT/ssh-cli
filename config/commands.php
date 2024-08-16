@@ -14,7 +14,7 @@ return [
     */
 
     // 'default' => NunoMaduro\LaravelConsoleSummary\SummaryCommand::class,
-    'default' => App\Commands\ListMachines::class,
+    'default' => App\Commands\Menu::class,
 
     /*
     |--------------------------------------------------------------------------

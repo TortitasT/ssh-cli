@@ -2,6 +2,7 @@
 
 namespace App\Commands;
 
+use App\Constants;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Support\Facades\DB;
 use LaravelZero\Framework\Commands\Command;
@@ -35,9 +36,11 @@ class RemoveMachine extends Command
             return "$description ($ip_address)";
         })->toArray();
 
-        $menu = $this->menu('Select a machine to remove', $options)
+        $title = Constants::HEADER . "\nSelect a machine to remove:";
+        $menu = $this->menu($title, $options)
             ->setForegroundColour('white')
             ->setBackgroundColour('black');
+
         $selectedMachine = $menu->open();
         if ($selectedMachine === null) {
             $this->info('No machine selected. Exiting...');

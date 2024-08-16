@@ -32,28 +32,22 @@ class AddMachine extends Command
         $ip_address = $this->ask('Enter the IP address of the machine');
         $private_key_path = $this->askForPrivateKeyPath();
 
-        $this->info('Adding machine...');
-
         $machine = [
             'description' => $description,
             'ip_address' => $ip_address,
             'private_key_path' => $private_key_path,
         ];
         DB::table('machines')->insert($machine);
-
         $this->info('Machine added successfully');
-
-        $this->info('Adding user...');
 
         $user = [
             'name' => $username,
             'machine_id' => DB::getPdo()->lastInsertId(),
         ];
         DB::table('users')->insert($user);
-
         $this->info('User added successfully');
 
-        $this->info('Machine and user added successfully');
+        $this->info('Machine ready to connect to!, run `ssh-cli` to connect to the machine');
     }
 
     /**
