@@ -20,5 +20,7 @@ composer install
 ## Usage
 
 ```bash
-ssh-cli help
+ssh-cli
 ```
+
+![Usage example](./img/usage.png)
